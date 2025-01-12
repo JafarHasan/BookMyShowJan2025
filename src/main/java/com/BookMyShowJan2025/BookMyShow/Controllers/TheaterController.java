@@ -2,6 +2,7 @@ package com.BookMyShowJan2025.BookMyShow.Controllers;
 
 import com.BookMyShowJan2025.BookMyShow.DTOs.MovieDTO;
 import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterDto;
+import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterSeatDto;
 import com.BookMyShowJan2025.BookMyShow.Models.Movie;
 import com.BookMyShowJan2025.BookMyShow.Models.Theater;
 import com.BookMyShowJan2025.BookMyShow.Services.TheaterService;
@@ -30,6 +31,12 @@ public class TheaterController {
     @DeleteMapping("/delete-theater-by-id")
     public ResponseEntity<String> deleteTheaterById(@RequestParam Integer theaterId) {
         String response = theaterService.deleteTheaterById(theaterId);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+
+    }
+    @PutMapping("associate-theater-with-theaterSeat")
+    public ResponseEntity<String> associateTheaterWithTheaterSeat(@RequestBody TheaterSeatDto theaterSeatDto) {
+        String response=theaterService.associateTheaterWithSeat(theaterSeatDto);
         return new ResponseEntity<>(response,HttpStatus.OK);
 
     }

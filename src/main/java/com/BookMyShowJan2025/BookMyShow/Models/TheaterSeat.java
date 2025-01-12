@@ -27,6 +27,38 @@ public class TheaterSeat {
     private SeatType seatType;
 
     @JoinColumn
-    @ManyToOne
+    @ManyToOne      //many seats in one theater
     private Theater theater;
+
+    public Integer getTheaterId() {
+        return theaterId;
+    }
+
+    public void setTheaterId(Integer theaterId) {
+        this.theaterId = theaterId;
+    }
+
+    public String getSeatNo() {
+        return seatNo;
+    }
+
+    public void setSeatNo(String seatNo) {
+        this.seatNo = seatNo;
+    }
+
+    public SeatType getSeatType() {
+        return seatType;
+    }
+
+    public void setSeatType(SeatType seatType) {
+        this.seatType = seatType;
+    }
+
+    public Theater getTheater() {
+        return theater;
+    }
+
+    public void setTheater(Theater theater) {
+        this.theater = theater;
+    }
 }

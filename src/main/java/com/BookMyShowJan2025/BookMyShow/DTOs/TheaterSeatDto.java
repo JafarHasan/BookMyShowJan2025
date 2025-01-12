@@ -10,6 +10,30 @@ import lombok.NoArgsConstructor;
 public class TheaterSeatDto {
 
     private Integer theaterId;
-    private String seatName;
-    private String seatType;
+    private Integer noOfPremiumSeat;
+    private Integer noOfClassicSeat;
+
+    public Integer getTheaterId() {
+        return theaterId;
+    }
+
+    public void setTheaterId(Integer theaterId) {
+        this.theaterId = theaterId;
+    }
+
+    public Integer getNoOfPremiumSeat() {
+        return noOfPremiumSeat;
+    }
+
+    public void setNoOfPremiumSeat(Integer noOfPremiumSeat) {
+        this.noOfPremiumSeat = noOfPremiumSeat;
+    }
+
+    public Integer getNoOfClassicSeat() {
+        return noOfClassicSeat;
+    }
+
+    public void setNoOfClassicSeat(Integer noOfClassicSeat) {
+        this.noOfClassicSeat = noOfClassicSeat;
+    }
 }

@@ -37,6 +37,7 @@ public class Theater {
     @OneToMany(mappedBy = "theater",cascade = CascadeType.ALL)
     private List<TheaterSeat> theaterSeatList=new ArrayList<>();
 
+
     public Integer getTheaterId() {
         return theaterId;
     }
