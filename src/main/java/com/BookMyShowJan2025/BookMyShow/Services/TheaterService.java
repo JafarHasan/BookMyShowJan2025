@@ -110,7 +110,7 @@ public class TheaterService implements TheaterInterface {
         for(row=1;row<=noOfClassicalSeatsRows;row++){
             for(int j=1;j<=10;j++){
                 char ch=(char)('A'+j-1);
-                String seatNo=row+ch+"";
+                String seatNo=""+row+ch;
 
                 //map this DTO with TheaterSeat Entity
                 TheaterSeat theaterSeat=new TheaterSeat();
@@ -121,13 +121,12 @@ public class TheaterService implements TheaterInterface {
                 //add this TheaterSeat to TheaterSeatList
                 theaterSeatList.add(theaterSeat);
 
-
             }
         }
         //for the last row of Classic seat
         for(int j=1;j<=noOfClassicalSeatsInLastRow;j++){
             char ch=(char)('A'+j-1);
-            String seatNo=row+ch+"";
+            String seatNo=""+row+ch;
 
             //map this DTO with TheaterSeat Entity
             TheaterSeat theaterSeat=new TheaterSeat();
@@ -166,7 +165,7 @@ public class TheaterService implements TheaterInterface {
         //for the last row
         for(int j=1;j<=noOfPremiumSeatsInLastRow;j++){
             char ch=(char)('A'+j-1);
-            String seatNo=row+ch+"";
+            String seatNo=""+row+ch;
 
             //map this DTO with TheaterSeat Entity
             TheaterSeat theaterSeat=new TheaterSeat();

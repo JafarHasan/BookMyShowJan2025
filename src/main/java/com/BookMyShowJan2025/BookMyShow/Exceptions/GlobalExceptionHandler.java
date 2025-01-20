@@ -12,10 +12,12 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(MovieAlreadyExists.class)
     public ResponseEntity<String> handleMovieAlreadyExistsException(MovieAlreadyExists ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
 
     @ExceptionHandler(MovieNotFoundException.class)
     public ResponseEntity<String> handleMovieNotFoundException(MovieNotFoundException ex){
@@ -26,6 +28,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleEmptyListException(EmptyListException ex){
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(TheaterAlreadyExistsException.class)
     public ResponseEntity<String> handleTheaterAlreadyExistsException(TheaterAlreadyExistsException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -35,6 +38,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleTheaterNotFoundException(TheaterNotFoundException ex){
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ShowNotFoundException.class)
+    public ResponseEntity<String> handleShowNotFoundException(ShowNotFoundException ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -43,5 +52,6 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity.badRequest().body(errors);
     }
+
     // We can add more exception handlers here for other custom exceptions
 }

@@ -3,10 +3,7 @@ package com.BookMyShowJan2025.BookMyShow.Models;
 import com.BookMyShowJan2025.BookMyShow.Enum.SeatType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name="TheaterSeat")
@@ -18,7 +15,7 @@ public class TheaterSeat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer theaterId;
+    private Integer seatId;
 
     @NotBlank(message = "Seat No can't be blank!")
     private String seatNo;
@@ -26,16 +23,17 @@ public class TheaterSeat {
     @Enumerated(EnumType.STRING)
     private SeatType seatType;
 
+
     @JoinColumn
     @ManyToOne      //many seats in one theater
     private Theater theater;
 
-    public Integer getTheaterId() {
-        return theaterId;
+    public Integer getSeatId() {
+        return seatId;
     }
 
-    public void setTheaterId(Integer theaterId) {
-        this.theaterId = theaterId;
+    public void setSeatId(Integer seatId) {
+        this.seatId = seatId;
     }
 
     public String getSeatNo() {
@@ -57,8 +55,8 @@ public class TheaterSeat {
     public Theater getTheater() {
         return theater;
     }
-
-    public void setTheater(Theater theater) {
-        this.theater = theater;
+    public void setTheater(Theater theater){
+        this.theater=theater;
     }
+
 }
