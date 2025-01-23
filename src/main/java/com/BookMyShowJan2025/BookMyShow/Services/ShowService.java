@@ -93,9 +93,6 @@ public class ShowService implements ShowInterface {
         showSeatRepository.saveAll(showSeatList);
 
         return "Show added for movie:"+movieName+" in "+theater.getTheaterName()+" successfully!";
-
-
-
     }
 
     @Override

@@ -5,8 +5,10 @@ import com.BookMyShowJan2025.BookMyShow.Exceptions.MovieAlreadyExists;
 import com.BookMyShowJan2025.BookMyShow.Exceptions.MovieNotFoundException;
 import com.BookMyShowJan2025.BookMyShow.Interfaces.MovieInterface;
 import com.BookMyShowJan2025.BookMyShow.Models.Movie;
+import com.BookMyShowJan2025.BookMyShow.Repositories.MoviePagingAndSortingRepository;
 import com.BookMyShowJan2025.BookMyShow.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +19,12 @@ public class MovieService implements MovieInterface {
 
     //constructor based dependency Injection
     private final MovieRepository movieRepository;
+    private final MoviePagingAndSortingRepository moviePagingAndSortingRepository;
     @Autowired
-    public MovieService(MovieRepository movieRepository) {
+    public MovieService(MovieRepository movieRepository,
+                        MoviePagingAndSortingRepository moviePagingAndSortingRepository) {
         this.movieRepository = movieRepository;
+        this.moviePagingAndSortingRepository=moviePagingAndSortingRepository;
     }
 
     @Override
@@ -101,6 +106,10 @@ public class MovieService implements MovieInterface {
         movieRepository.delete(movie);
 
         return "Movie deleted Successfully with id="+id;
+    }
+
+    public Iterable<Movie> getMovieWithPagination(Integer page,Integer size){
+        return moviePagingAndSortingRepository.findAll(PageRequest.of(page,size));
     }
 
 }

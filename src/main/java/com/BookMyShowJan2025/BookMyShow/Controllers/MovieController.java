@@ -56,4 +56,11 @@ public class MovieController {
 
     }
 
+    //http://localhost:8080/movie/get-movie-with-pagination?page=0&size=3 on the 0th page we want 3 enteries
+    @GetMapping("/get-movie-with-pagination")
+    public Iterable<Movie> getMovieWithPagination(@RequestParam Integer page,
+                                                  @RequestParam Integer size){
+        return movieService.getMovieWithPagination(page,size);
+    }
+
 }
