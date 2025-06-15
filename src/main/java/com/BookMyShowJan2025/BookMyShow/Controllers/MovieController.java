@@ -4,6 +4,7 @@ import com.BookMyShowJan2025.BookMyShow.DTOs.MovieDTO;
 import com.BookMyShowJan2025.BookMyShow.Models.Movie;
 import com.BookMyShowJan2025.BookMyShow.Services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movie")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class MovieController {
     private final MovieService movieService;
 
@@ -57,10 +59,20 @@ public class MovieController {
     }
 
     //http://localhost:8080/movie/get-movie-with-pagination?page=0&size=3 on the 0th page we want 3 enteries
+//    @GetMapping("/get-movie-with-pagination")
+//    public Iterable<Movie> getMovieWithPagination(@RequestParam Integer page,
+//                                                  @RequestParam Integer size){
+//        return movieService.getMovieWithPagination(page,size);
+//    }
     @GetMapping("/get-movie-with-pagination")
-    public Iterable<Movie> getMovieWithPagination(@RequestParam Integer page,
-                                                  @RequestParam Integer size){
-        return movieService.getMovieWithPagination(page,size);
+    public ResponseEntity<Page<Movie>> getMovieWithPagination(@RequestParam Integer page,
+                                                              @RequestParam Integer size){
+        return new ResponseEntity<>(movieService.getMovieWithPagination(page, size), HttpStatus.OK);
+    }
+
+    @GetMapping("/get-movie-list-by-genre/{genre}")
+    public ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable String genre){
+        return new ResponseEntity<>(movieService.getMovieByGenre(genre),HttpStatus.OK);
     }
 
 }

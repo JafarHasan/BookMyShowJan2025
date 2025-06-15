@@ -19,6 +19,7 @@ public class ShowController {
         this.showService=showService;
     }
 
+    //POST http://localhost:8080/show/add +showDto in requestBody
     @PostMapping("/add")
     public ResponseEntity<String> addShow(@RequestBody ShowDto showDto){
         String message=showService.addShow(showDto);

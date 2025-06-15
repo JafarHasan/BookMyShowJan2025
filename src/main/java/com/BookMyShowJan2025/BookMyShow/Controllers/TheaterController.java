@@ -3,6 +3,7 @@ package com.BookMyShowJan2025.BookMyShow.Controllers;
 import com.BookMyShowJan2025.BookMyShow.DTOs.MovieDTO;
 import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterDto;
 import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterSeatDto;
+import com.BookMyShowJan2025.BookMyShow.DTOs.TheatreListDTO;
 import com.BookMyShowJan2025.BookMyShow.Models.Movie;
 import com.BookMyShowJan2025.BookMyShow.Models.Theater;
 import com.BookMyShowJan2025.BookMyShow.Services.TheaterService;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/theater")
@@ -39,6 +42,17 @@ public class TheaterController {
         String response=theaterService.associateTheaterWithSeat(theaterSeatDto);
         return new ResponseEntity<>(response,HttpStatus.OK);
 
+    }
+    //GET:http://localhost:8080/theater/get-theater-by-location/DeLHi
+    @GetMapping("/get-theater-by-location/{location}")
+    public ResponseEntity<List<TheatreListDTO>> getTheaterByLocation(@PathVariable String location){
+        return new ResponseEntity<>(theaterService.getTheaterByLocation(location),HttpStatus.OK);
+
+    }
+    //GET:http://localhost:8080/theater/get-all-theater-list
+    @GetMapping("get-all-theater-list")
+    public ResponseEntity<List<TheatreListDTO>> getAllTheatreList(){
+        return  new ResponseEntity<>(theaterService.getAllTheatre(),HttpStatus.OK);
     }
 
 }

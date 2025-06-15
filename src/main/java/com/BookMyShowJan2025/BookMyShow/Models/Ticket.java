@@ -40,6 +40,16 @@ public class Ticket {
     @Positive(message = "Amount Must be greater than zero")
     private Integer totalAmt;
 
+    private String bookedSeats;
+
+    public String getBookedSeats() {
+        return bookedSeats;
+    }
+
+    public void setBookedSeats(String bookedSeats) {
+        this.bookedSeats = bookedSeats;
+    }
+
     //Many ticket of one show
     @JoinColumn
     @ManyToOne

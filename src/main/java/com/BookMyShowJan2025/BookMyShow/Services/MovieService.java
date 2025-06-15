@@ -1,6 +1,7 @@
 package com.BookMyShowJan2025.BookMyShow.Services;
 
 import com.BookMyShowJan2025.BookMyShow.DTOs.MovieDTO;
+import com.BookMyShowJan2025.BookMyShow.Enum.Genre;
 import com.BookMyShowJan2025.BookMyShow.Exceptions.MovieAlreadyExists;
 import com.BookMyShowJan2025.BookMyShow.Exceptions.MovieNotFoundException;
 import com.BookMyShowJan2025.BookMyShow.Interfaces.MovieInterface;
@@ -8,6 +9,7 @@ import com.BookMyShowJan2025.BookMyShow.Models.Movie;
 import com.BookMyShowJan2025.BookMyShow.Repositories.MoviePagingAndSortingRepository;
 import com.BookMyShowJan2025.BookMyShow.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -108,8 +110,20 @@ public class MovieService implements MovieInterface {
         return "Movie deleted Successfully with id="+id;
     }
 
-    public Iterable<Movie> getMovieWithPagination(Integer page,Integer size){
-        return moviePagingAndSortingRepository.findAll(PageRequest.of(page,size));
+//    public Iterable<Movie> getMovieWithPagination(Integer page,Integer size){
+//        return moviePagingAndSortingRepository.findAll(PageRequest.of(page,size));
+//    }
+public Page<Movie> getMovieWithPagination(Integer page, Integer size) {
+    return moviePagingAndSortingRepository.findAll(PageRequest.of(page, size));
+}
+public List<Movie> getMovieByGenre(String genre){
+    try {
+        Genre enumGenre = Genre.valueOf(genre.trim().toUpperCase());
+        return movieRepository.findAllByGenre(enumGenre);
+    } catch (IllegalArgumentException e) {
+        throw new RuntimeException("Invalid genre: " + genre);
     }
+}
+
 
 }

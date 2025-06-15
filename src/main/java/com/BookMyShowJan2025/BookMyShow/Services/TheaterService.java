@@ -2,7 +2,9 @@ package com.BookMyShowJan2025.BookMyShow.Services;
 
 import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterDto;
 import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterSeatDto;
+import com.BookMyShowJan2025.BookMyShow.DTOs.TheatreListDTO;
 import com.BookMyShowJan2025.BookMyShow.Enum.SeatType;
+import com.BookMyShowJan2025.BookMyShow.Exceptions.EmptyTheatreListException;
 import com.BookMyShowJan2025.BookMyShow.Exceptions.TheaterAlreadyExistsException;
 import com.BookMyShowJan2025.BookMyShow.Exceptions.TheaterNotFoundException;
 import com.BookMyShowJan2025.BookMyShow.Interfaces.TheaterInterface;
@@ -177,4 +179,44 @@ public class TheaterService implements TheaterInterface {
         }
         return theaterSeatList;
     }
+    public List<TheatreListDTO> getTheaterByLocation(String location){
+        List<Theater> theaterList=theaterRepository.findAll();
+        if(theaterList.isEmpty()){
+            throw  new EmptyTheatreListException("Empty Theatre List");
+        }
+        List<TheatreListDTO> theatreListDTOS=new ArrayList<>();
+        for(Theater t:theaterList){
+            if(t.getAddress().toLowerCase().contains(location.toLowerCase())) {
+                TheatreListDTO th = new TheatreListDTO();
+                th.setTheaterId(t.getTheaterId());
+                th.setAddress(t.getAddress());
+                th.setTheaterName(t.getTheaterName());
+                th.setNoOfScreen(t.getNoOfScreen());
+
+                theatreListDTOS.add(th);
+            }
+        }
+        if(theatreListDTOS.isEmpty()){
+            throw new EmptyTheatreListException("No Theatre Found on this location...");
+        }
+        return theatreListDTOS;
+    }
+    public List<TheatreListDTO> getAllTheatre(){
+        List<Theater> theaterList=theaterRepository.findAll();
+        if(theaterList.isEmpty()){
+            throw  new EmptyTheatreListException("Empty Theatre List");
+        }
+        List<TheatreListDTO> theatreListDTOS=new ArrayList<>();
+        for(Theater t:theaterList){
+            TheatreListDTO th=new TheatreListDTO();
+            th.setTheaterId(t.getTheaterId());
+            th.setAddress(t.getAddress());
+            th.setTheaterName(t.getTheaterName());
+            th.setNoOfScreen(t.getNoOfScreen());
+
+            theatreListDTOS.add(th);
+        }
+        return theatreListDTOS;
+    }
+
 }

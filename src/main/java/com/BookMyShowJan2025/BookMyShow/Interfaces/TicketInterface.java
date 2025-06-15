@@ -9,7 +9,7 @@ import java.util.List;
 public interface TicketInterface {
 
     // Create a ticket
-    TicketResponse bookTicket(BookTicketDto bookTicketDto) throws Exception;
+    String bookTicket(BookTicketDto bookTicketDto) throws Exception;
 
     // Fetch all tickets
     List<Ticket> getAllTickets() throws Exception;

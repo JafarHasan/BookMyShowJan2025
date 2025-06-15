@@ -61,6 +61,10 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity.badRequest().body(errors);
     }
+    @ExceptionHandler(EmptyTheatreListException.class)
+    public ResponseEntity<String> handleEmptyTheatreListException(EmptyTheatreListException ex){
+        return  new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+    }
 
     // We can add more exception handlers here for other custom exceptions
 }
