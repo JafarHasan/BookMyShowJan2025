@@ -1,9 +1,7 @@
 package com.BookMyShowJan2025.BookMyShow.Controllers;
 
-import com.BookMyShowJan2025.BookMyShow.DTOs.MovieDTO;
-import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterDto;
-import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterSeatDto;
-import com.BookMyShowJan2025.BookMyShow.DTOs.TheatreListDTO;
+import com.BookMyShowJan2025.BookMyShow.DTOs.*;
+import com.BookMyShowJan2025.BookMyShow.Exceptions.TheaterNotFoundException;
 import com.BookMyShowJan2025.BookMyShow.Models.Movie;
 import com.BookMyShowJan2025.BookMyShow.Models.Theater;
 import com.BookMyShowJan2025.BookMyShow.Services.TheaterService;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/theater")
 public class TheaterController {
 
@@ -30,6 +29,11 @@ public class TheaterController {
         return new ResponseEntity<>(theater, HttpStatus.OK);
     }
 
+    @GetMapping("/search-theater-by-name")
+    public ResponseEntity<GetTheaterDTO> getTheaterByName(@RequestParam String name){
+        return new ResponseEntity<>(theaterService.getTheaterByName(name.toLowerCase()),HttpStatus.OK);
+
+    }
     //DELETE:http://localhost:8080/theater/delete-theater-by-id?theaterId=1
     @DeleteMapping("/delete-theater-by-id")
     public ResponseEntity<String> deleteTheaterById(@RequestParam Integer theaterId) {

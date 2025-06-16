@@ -1,5 +1,6 @@
 package com.BookMyShowJan2025.BookMyShow.Services;
 
+import com.BookMyShowJan2025.BookMyShow.DTOs.GetTheaterDTO;
 import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterDto;
 import com.BookMyShowJan2025.BookMyShow.DTOs.TheaterSeatDto;
 import com.BookMyShowJan2025.BookMyShow.DTOs.TheatreListDTO;
@@ -219,4 +220,25 @@ public class TheaterService implements TheaterInterface {
         return theatreListDTOS;
     }
 
+    public GetTheaterDTO getTheaterByName(String name) {
+        // Check for null or empty input
+        if (name == null || name.trim().isEmpty()) {
+            throw new TheaterNotFoundException("Theater name must not be null or empty.");
+        }
+
+        // Fetch theater
+        Theater theater = theaterRepository.findByTheaterName(name);
+
+        // If not found
+        if (theater == null) {
+            throw new TheaterNotFoundException("Theater not found with name: " + name);
+        }
+
+        GetTheaterDTO getTheaterDTO=new GetTheaterDTO();
+        getTheaterDTO.setTheaterId(theater.getTheaterId());
+        getTheaterDTO.setTheaterName(theater.getTheaterName());
+        getTheaterDTO.setNoOfScreen(theater.getNoOfScreen());
+        getTheaterDTO.setAddress(theater.getAddress());
+        return getTheaterDTO;
+    }
 }

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface TheaterRepository extends JpaRepository<Theater,Integer> {
 
     Theater findByTheaterNameAndAddress(String theaterName,String address);
+    Theater findByTheaterName(String theaterName);
 }
