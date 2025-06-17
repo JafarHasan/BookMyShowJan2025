@@ -90,7 +90,41 @@ public class MovieService implements MovieInterface {
         return movie;
 
     }
+    public String updateMovieByMovieId(Integer movieId,MovieDTO updateMovieDto){
+        Optional<Movie> optionalMovie = movieRepository.findById(movieId); // Correct return type
 
+        if (optionalMovie.isEmpty()) {
+            throw new MovieNotFoundException("Error...Movie not found!");
+        }
+
+        //get Movie from DB
+        Movie movie=optionalMovie.get();
+
+        //update movie fields with updatedMovieDto(mapped)
+        movie.setMovieName(updateMovieDto.getMovieName());
+        movie.setDuration(updateMovieDto.getDuration());
+        movie.setReleaseDate(updateMovieDto.getReleaseDate());
+        movie.setLanguage(updateMovieDto.getLanguage());
+        movie.setGenre(updateMovieDto.getGenre());
+        movie.setRating(updateMovieDto.getRating());
+
+        //save updated movieDto to Databases
+        movie=movieRepository.save(movie);
+        return "Movie Update successfully";
+    }
+    public MovieDTO getMovieById(Integer movieId){
+        Movie movie = movieRepository.findById(movieId)
+                .orElseThrow(() -> new MovieNotFoundException("Movie not found with id: " + movieId));
+        MovieDTO dto = new MovieDTO();
+        dto.setMovieName(movie.getMovieName());
+        dto.setDuration(movie.getDuration());
+        dto.setReleaseDate(movie.getReleaseDate());
+        dto.setLanguage(movie.getLanguage());
+        dto.setGenre(movie.getGenre());
+        dto.setRating(movie.getRating());
+
+        return dto;
+    }
     @Override
     public String deleteMovieById(Integer id){
         //1 find movie in DB

@@ -28,7 +28,7 @@ public class TheaterController {
         Theater theater = theaterService.addTheater(theaterDto);
         return new ResponseEntity<>(theater, HttpStatus.OK);
     }
-
+    //GET:http://localhost:8080/theater/search-theater-by-name?name=cinepolis
     @GetMapping("/search-theater-by-name")
     public ResponseEntity<GetTheaterDTO> getTheaterByName(@RequestParam String name){
         return new ResponseEntity<>(theaterService.getTheaterByName(name.toLowerCase()),HttpStatus.OK);

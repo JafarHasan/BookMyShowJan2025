@@ -1,6 +1,7 @@
 package com.BookMyShowJan2025.BookMyShow.Controllers;
 
 import com.BookMyShowJan2025.BookMyShow.DTOs.MovieDTO;
+import com.BookMyShowJan2025.BookMyShow.Exceptions.MovieNotFoundException;
 import com.BookMyShowJan2025.BookMyShow.Models.Movie;
 import com.BookMyShowJan2025.BookMyShow.Services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/movie")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+
 public class MovieController {
     private final MovieService movieService;
+
 
     @Autowired
     public MovieController(MovieService movieService) {
@@ -50,6 +53,20 @@ public class MovieController {
         Movie movie = movieService.updateMovieByMovieName(movieName,movieDTO);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
+    //GET:http://localhost:8080/movie/get-movie-by-id/2
+    // (ans movieDTO in requestBody)
+    @PutMapping("/update-movie-by-id/{movieId}")
+    public ResponseEntity<String> updateMovieByMovieName(@PathVariable Integer movieId,
+                                                        @RequestBody MovieDTO movieDTO) {
+        String res = movieService.updateMovieByMovieId(movieId,movieDTO);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+    //GET:http://localhost:8080/movie/get-movie-by-id/1
+    @GetMapping("/get-movie-by-id/{movieId}")
+    public ResponseEntity<MovieDTO> getMovieById(@PathVariable Integer movieId) {
+        MovieDTO dto=movieService.getMovieById(movieId);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
     //DELETE:http://localhost:8080/movie/delete-movie-by-id?id=10
     @DeleteMapping("/delete-movie-by-id")
     public ResponseEntity<String> deleteMovieById(@RequestParam Integer id) {
@@ -70,6 +87,7 @@ public class MovieController {
         return new ResponseEntity<>(movieService.getMovieWithPagination(page, size), HttpStatus.OK);
     }
 
+    //GET:http://localhost:8080/movie/get-movie-list-by-genre/EPIC
     @GetMapping("/get-movie-list-by-genre/{genre}")
     public ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable String genre){
         return new ResponseEntity<>(movieService.getMovieByGenre(genre),HttpStatus.OK);
