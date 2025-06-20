@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
@@ -18,6 +19,8 @@ public class UserController {
     public UserController(UserService userService){
         this.userService=userService;
     }
+
+    //This API will be use when User will sign-UP(create a new account)
     //http://localhost:8080/user/add
     @PostMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody UserDto userDto){

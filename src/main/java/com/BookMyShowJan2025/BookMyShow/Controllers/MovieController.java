@@ -53,10 +53,10 @@ public class MovieController {
         Movie movie = movieService.updateMovieByMovieName(movieName,movieDTO);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
-    //GET:http://localhost:8080/movie/get-movie-by-id/2
+    //GET:http://localhost:8080/movie/update-movie-by-id/2
     // (ans movieDTO in requestBody)
     @PutMapping("/update-movie-by-id/{movieId}")
-    public ResponseEntity<String> updateMovieByMovieName(@PathVariable Integer movieId,
+    public ResponseEntity<String> updateMovieByMovieId(@PathVariable Integer movieId,
                                                         @RequestBody MovieDTO movieDTO) {
         String res = movieService.updateMovieByMovieId(movieId,movieDTO);
         return new ResponseEntity<>(res, HttpStatus.OK);

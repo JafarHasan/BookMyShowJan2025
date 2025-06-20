@@ -1,5 +1,6 @@
 package com.BookMyShowJan2025.BookMyShow.DTOs;
 
+import com.BookMyShowJan2025.BookMyShow.Enum.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ public class UserDto {
     private Integer age;
     private String email;
     private String mobileNo;
+    private String password;
 
 
     public String getUserName() {
@@ -45,6 +47,14 @@ public class UserDto {
 
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

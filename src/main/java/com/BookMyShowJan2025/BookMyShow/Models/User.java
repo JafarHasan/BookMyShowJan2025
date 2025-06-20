@@ -1,9 +1,12 @@
 package com.BookMyShowJan2025.BookMyShow.Models;
 
+import com.BookMyShowJan2025.BookMyShow.Enum.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -35,6 +38,38 @@ public class User {
     @Pattern(regexp = "^[0-9]{10}$", message = "Mobile no must be exactly 10 digits")
     private String mobileNo;
 
+    @NotBlank(message = "Password must not be null")
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    private LocalDateTime lastLogin;
+
+    ///GETTER AND SETTER
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password=password;
+    }
     public Integer getUserId(){
         return userId;
     }

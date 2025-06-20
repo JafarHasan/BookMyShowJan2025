@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Value;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -56,8 +58,9 @@ public class Ticket {
     private Show show;
 
     //many ticket booked by one user
-    @JoinColumn
     @ManyToOne
+    @JoinColumn(name = "user_user_id", foreignKey = @ForeignKey(name = "FK_user_ticket"))
+    @OnDelete(action = OnDeleteAction.CASCADE)  // Hibernate-specific
     private User user;
 
 

@@ -8,5 +8,6 @@ public enum Genre {
     HISTORIC,
     DRAMA,
     CRIME,
-    SCIENTIFIC
+    SCIENTIFIC,
+    ACTION
 }
