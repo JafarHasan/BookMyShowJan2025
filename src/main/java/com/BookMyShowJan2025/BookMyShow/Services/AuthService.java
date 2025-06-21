@@ -7,6 +7,7 @@ import com.BookMyShowJan2025.BookMyShow.Enum.Role;
 import com.BookMyShowJan2025.BookMyShow.Exceptions.UserAlreadyExistsWithThisEmailException;
 import com.BookMyShowJan2025.BookMyShow.Models.User;
 import com.BookMyShowJan2025.BookMyShow.Repositories.UserRepositories;
+import com.BookMyShowJan2025.BookMyShow.Util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +26,16 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepositories userRepositories;
-    private AuthenticationManager authenticationManager;
-    private CustomUserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final CustomUserDetailsService userDetailsService;
+    private final JwtUtil jwtUtil;
     @Autowired
-    public AuthService(UserRepositories userRepositories,PasswordEncoder passwordEncoder,AuthenticationManager authenticationManager,CustomUserDetailsService userDetailsService){
+    public AuthService(UserRepositories userRepositories,PasswordEncoder passwordEncoder,AuthenticationManager authenticationManager,CustomUserDetailsService userDetailsService,JwtUtil jwtUtil){
         this.userRepositories=userRepositories;
         this.passwordEncoder=passwordEncoder;
         this.authenticationManager=authenticationManager;
         this.userDetailsService=userDetailsService;
+        this.jwtUtil=jwtUtil;
 
     }
 
@@ -75,9 +78,10 @@ public class AuthService {
             UserDetails userDetails = userDetailsService.loadUserByUsername(loginDto.getEmail());
 
             // Step 3: Generate JWT
-            String token = jwtUtil.generateToken(userDetails);
+        String token = jwtUtil.generateToken(loginDto.getEmail());
 
-            // Step 4: Extract role (first authority)
+
+        // Step 4: Extract role (first authority)
             String role = userDetails.getAuthorities().iterator().next().getAuthority();
 
             // Step 5: Return token and role

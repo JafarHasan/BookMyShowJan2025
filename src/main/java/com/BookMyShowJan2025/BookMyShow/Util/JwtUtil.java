@@ -1,51 +1,48 @@
 package com.BookMyShowJan2025.BookMyShow.Util;
 
-import lombok.Value;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
-
+@Component
 public class JwtUtil {
-    @Value("${jwt.secret}") // defined in application.properties
-    private String secret;
 
-    @Value("${jwt.expiration}") // e.g., 2592000000 for 30 days
-    private long expirationMs;
+    @Value("${jwt.secret}")
+    private String secretKey;
+
+    @Value("${jwt.expiration}")
+    private long expirationTime;
 
     // Generate token
-    public String generateToken(String email, String role) {
+    public String generateToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
-                .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
-    // Extract email (subject)
+    // Extract email (username)
     public String extractUsername(String token) {
         return getClaims(token).getSubject();
     }
 
-    // Extract role
-    public String extractRole(String token) {
-        return (String) getClaims(token).get("role");
-    }
-
     // Validate token
-    public boolean isTokenValid(String token) {
+    public boolean validateToken(String token) {
         try {
-            getClaims(token);
-            return true;
-        } catch (JwtException | IllegalArgumentException e) {
+            return !getClaims(token).getExpiration().before(new Date());
+        } catch (Exception e) {
             return false;
         }
     }
 
-    // Parse claims
     private Claims getClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(secret)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
     }
