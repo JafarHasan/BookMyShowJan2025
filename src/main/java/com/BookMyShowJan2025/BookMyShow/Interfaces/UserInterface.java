@@ -7,7 +7,7 @@ import java.security.spec.ECField;
 
 public interface UserInterface {
 
-    User addUser(UserDto userDto) throws Exception;
+    //User addUser(UserDto userDto) throws Exception;
 
     User getUserById(Integer userId) throws Exception;
 

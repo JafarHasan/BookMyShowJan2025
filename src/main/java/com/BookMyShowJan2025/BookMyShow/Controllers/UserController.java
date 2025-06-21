@@ -22,11 +22,12 @@ public class UserController {
 
     //This API will be use when User will sign-UP(create a new account)
     //http://localhost:8080/user/add
-    @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestBody UserDto userDto){
-        User user=userService.addUser(userDto);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
+//    @PostMapping("/add")
+//    public ResponseEntity<User> addUser(@RequestBody UserDto userDto){
+//        User user=userService.addUser(userDto);
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//    }
+    //IMPLEMENTED IN AUTHCONTROLLER
 
     //GET:http://localhost:8080/user/get-user-by-id/1
     @GetMapping("/get-user-by-id/{userId}")

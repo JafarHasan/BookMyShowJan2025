@@ -25,27 +25,6 @@ public class UserService implements UserInterface {
     }
 
     @Override
-    public User addUser(UserDto userDto)  {
-        User user=new User();
-        user.setUserName(userDto.getUserName());
-        user.setAge(userDto.getAge());
-        user.setMobileNo(userDto.getMobileNo());
-        user.setEmail(userDto.getEmail());
-
-       // user.setPassword(userDto.getPassword());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-        //BY DEFAUlT ROLE IS USER FOR ALL
-        user.setRole(Role.USER);
-
-        //CURR SYSTEM DATE TIME
-        user.setLastLogin(LocalDateTime.now());
-        //save into DB
-        user=userRepositories.save(user);
-        return user;
-    }
-
-    @Override
     public User getUserById(Integer userId)  {
         //get user from DB
         Optional<User> optionalUser=userRepositories.findById(userId);

@@ -53,6 +53,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleTicketNotFoundException(TicketNotFoundException ex){
         return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(EmptyTheatreListException.class)
+    public ResponseEntity<String> handleEmptyTheatreListException(EmptyTheatreListException ex){
+        return  new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsWithThisEmailException.class)
+    public ResponseEntity<String> handleUserAlreadyExistsWithThisEmailException(UserAlreadyExistsWithThisEmailException ex){
+        return new ResponseEntity<>(ex.getMessage(),HttpStatus.FOUND);
+    }
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -61,10 +71,5 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity.badRequest().body(errors);
     }
-    @ExceptionHandler(EmptyTheatreListException.class)
-    public ResponseEntity<String> handleEmptyTheatreListException(EmptyTheatreListException ex){
-        return  new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
-    }
-
     // We can add more exception handlers here for other custom exceptions
 }
