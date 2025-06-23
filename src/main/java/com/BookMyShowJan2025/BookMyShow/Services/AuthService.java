@@ -77,6 +77,17 @@ public class AuthService {
             // Step 2: Load UserDetails
             UserDetails userDetails = userDetailsService.loadUserByUsername(loginDto.getEmail());
 
+        // ✅ Step 2.5: Update lastLogin in DB
+        Optional<User> optionalUser = userRepositories.findByEmail(loginDto.getEmail());
+        String name="";
+        if (optionalUser.isPresent()) {
+
+            User user = optionalUser.get();
+            user.setLastLogin(LocalDateTime.now());
+            name=user.getUserName();
+            userRepositories.save(user);
+        }
+
             // Step 3: Generate JWT
         String token = jwtUtil.generateToken(loginDto.getEmail());
 
@@ -88,7 +99,7 @@ public class AuthService {
             JWTResponseDto jwtResponse = new JWTResponseDto();
             jwtResponse.setToken(token);
             jwtResponse.setRole(role);
-
+            jwtResponse.setName(name);
             return jwtResponse;
         }
 }

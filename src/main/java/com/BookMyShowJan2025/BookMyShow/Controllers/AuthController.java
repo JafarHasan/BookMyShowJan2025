@@ -30,6 +30,7 @@ public class AuthController {
     }
     @PostMapping("/login")
     public ResponseEntity<JWTResponseDto> login(@RequestBody LoginDto loginDto) {
+       // System.out.println("Login API hit....");
         return new ResponseEntity<>(authService.login(loginDto),HttpStatus.OK);
     }
 
